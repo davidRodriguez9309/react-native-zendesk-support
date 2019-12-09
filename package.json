@@ -1,11 +1,11 @@
 {
-  "name": "@synapsestudios/react-native-zendesk-support",
-  "version": "1.0.2",
+  "name": "@arablelabs/react-native-zendesk-support",
+  "version": "1.0.4",
   "description": "React Native Wrapper around Zendesk Support",
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/synapsestudios/react-native-zendesk-support"
+    "url": "https://github.com/davidRodriguez9309/react-native-zendesk-support"
   },
   "keywords": [
     "zendesk",
@@ -16,6 +16,6 @@
     "android",
     "react-component"
   ],
-  "author": "Synapse Studios, LLC (http://synapsestudios.com)",
+  "author": "Arable Labs, LLC (http://arable.com)",
   "license": "MIT"
 }
