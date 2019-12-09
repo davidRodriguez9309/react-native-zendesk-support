@@ -1,6 +1,6 @@
 {
   "name": "@arablelabs/react-native-zendesk-support",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "React Native Wrapper around Zendesk Support",
   "main": "index.js",
   "repository": {

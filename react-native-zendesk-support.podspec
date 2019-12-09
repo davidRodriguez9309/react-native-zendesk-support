@@ -13,7 +13,7 @@ Pod::Spec.new do |s|
   s.homepage = 'https://github.com/davidRodriguez9309/react-native-zendesk-support'
   s.source_files   = 'ios/RNZenDeskSupport.{h,m}'
 
-  s.platform = :ios, "8.0"
+  s.platform = :ios, "9.3"
 
   s.dependency 'ZendeskSDK','~> 4.0.0'
   s.dependency 'React'
