@@ -44,10 +44,10 @@ RCT_EXPORT_METHOD(showHelpCenterWithOptions:(NSDictionary *)options) {
         ZDKHelpCenterUiConfiguration * hcConfig = [ZDKHelpCenterUiConfiguration new];
         hcConfig.showContactOptionsOnEmptySearch = [RCTConvert BOOL:options[@"hideContactSupport"]];
         if (hcConfig.showContactOptionsOnEmptySearch) {
-            //[ZDKHelpCenter setNavBarConversationsUIType:ZDKNavBarConversationsUITypeNone];
+            [ZDKHelpCenter setNavBarConversationsUIType:ZDKNavBarConversationsUITypeNone];
         }
-        //vc.modalPresentationStyle = UIModalPresentationFormSheet;
-        //[ZDKHelpCenter presentHelpCenterOverview:vc withContentModel:helpCenterContentModel];
+        vc.modalPresentationStyle = UIModalPresentationFormSheet;
+        [ZDKHelpCenter presentHelpCenterOverview:vc withContentModel:helpCenterContentModel];
     });
 }
 
@@ -60,10 +60,10 @@ RCT_EXPORT_METHOD(showCategoriesWithOptions:(NSArray *)categories options:(NSDic
         helpCenterContentModel.groupIds = categories;
         helpCenterContentModel.hideContactSupport = [RCTConvert BOOL:options[@"hideContactSupport"]];
         if (helpCenterContentModel.hideContactSupport) {
-            //[ZDKHelpCenter setNavBarConversationsUIType:ZDKNavBarConversationsUITypeNone];
+            [ZDKHelpCenter setNavBarConversationsUIType:ZDKNavBarConversationsUITypeNone];
         }
         vc.modalPresentationStyle = UIModalPresentationFormSheet;
-        //[ZDKHelpCenter presentHelpCenterOverview:vc withContentModel:helpCenterContentModel];
+        [ZDKHelpCenter presentHelpCenterOverview:vc withContentModel:helpCenterContentModel];
     });
 }
 
@@ -76,10 +76,10 @@ RCT_EXPORT_METHOD(showSectionsWithOptions:(NSArray *)sections options:(NSDiction
         helpCenterContentModel.groupIds = sections;
         helpCenterContentModel.hideContactSupport = [RCTConvert BOOL:options[@"hideContactSupport"]];
         if (helpCenterContentModel.hideContactSupport) {
-            //[ZDKHelpCenter setNavBarConversationsUIType:ZDKNavBarConversationsUITypeNone];
+            [ZDKHelpCenter setNavBarConversationsUIType:ZDKNavBarConversationsUITypeNone];
         }
         vc.modalPresentationStyle = UIModalPresentationFormSheet;
-        //[ZDKHelpCenter presentHelpCenterOverview:vc withContentModel:helpCenterContentModel];
+        [ZDKHelpCenter presentHelpCenterOverview:vc withContentModel:helpCenterContentModel];
     });
 }
 
@@ -91,10 +91,10 @@ RCT_EXPORT_METHOD(showLabelsWithOptions:(NSArray *)labels options:(NSDictionary 
         helpCenterContentModel.labels = labels;
         helpCenterContentModel.hideContactSupport = [RCTConvert BOOL:options[@"hideContactSupport"]];
         if (helpCenterContentModel.hideContactSupport) {
-            //[ZDKHelpCenter setNavBarConversationsUIType:ZDKNavBarConversationsUITypeNone];
+            [ZDKHelpCenter setNavBarConversationsUIType:ZDKNavBarConversationsUITypeNone];
         }
         vc.modalPresentationStyle = UIModalPresentationFormSheet;
-        //[ZDKHelpCenter presentHelpCenterOverview:vc withContentModel:helpCenterContentModel];
+        [ZDKHelpCenter presentHelpCenterOverview:vc withContentModel:helpCenterContentModel];
     });
 }
 
@@ -121,10 +121,10 @@ RCT_EXPORT_METHOD(callSupport:(NSDictionary *)customFields) {
         NSMutableArray *fields = [[NSMutableArray alloc] init];
         for (NSString* key in customFields) {
             id value = [customFields objectForKey:key];
-            //[fields addObject: [[ZDKCustomField alloc] initWithFieldId:@(key.integerValue) andValue:value]];
+            [fields addObject: [[ZDKCustomField alloc] initWithFieldId:@(key.integerValue) andValue:value]];
         }
-        //[ZDKConfig instance].customTicketFields = fields;
-        //[ZDKRequests presentRequestCreationWithViewController:vc];
+        [ZDKConfig instance].customTicketFields = fields;
+        [ZDKRequests presentRequestCreationWithViewController:vc];
     });
 }
 
@@ -132,7 +132,7 @@ RCT_EXPORT_METHOD(supportHistory){
     dispatch_async(dispatch_get_main_queue(), ^{
         UIWindow *window=[UIApplication sharedApplication].keyWindow;
         UIViewController *vc = [window rootViewController];
-        //[ZDKRequests presentRequestListWithViewController:vc];
+        [ZDKRequests presentRequestListWithViewController:vc];
     });
 }
 @end
