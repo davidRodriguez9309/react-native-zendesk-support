@@ -25,9 +25,6 @@ RCT_EXPORT_METHOD(initialize:(NSDictionary *)config){
     
     [ZDKZendesk initializeWithAppId:appId clientId:clientId zendeskUrl:zendeskUrl];
     [ZDKSupportUI initializeWithZendesk:[ZDKZendesk instance]];
-
-    [ZDKCoreLogger setEnabled:YES];
-    [ZDKCoreLogger setLogLevel:ZDKLogLevelDebug];
 }
 
 RCT_EXPORT_METHOD(setupIdentity:(NSDictionary *)identity){
