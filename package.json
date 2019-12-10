@@ -5,7 +5,7 @@
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/davidRodriguez9309/react-native-zendesk-support"
+    "url": "https://github.com/felipe-cespedes/react-native-zendesk-support"
   },
   "keywords": [
     "zendesk",
