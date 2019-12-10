@@ -1,10 +1,10 @@
 //
 //  RNZenDeskSupport.m
 //
-//  Created by Patrick O'Connor on 8/30/17.
+//  Created by David Rodriguez
 //
 
-// RN < 0.40 suppoert
+// RN <= 0.61 support
 #if __has_include(<React/RCTBridge.h>)
 #import <React/RCTConvert.h>
 #else
@@ -25,6 +25,9 @@ RCT_EXPORT_METHOD(initialize:(NSDictionary *)config){
     
     [ZDKZendesk initializeWithAppId:appId clientId:clientId zendeskUrl:zendeskUrl];
     [ZDKSupportUI initializeWithZendesk:[ZDKZendesk instance]];
+
+    [ZDKCoreLogger setEnabled:YES];
+    [ZDKCoreLogger setLogLevel:ZDKLogLevelDebug];
 }
 
 RCT_EXPORT_METHOD(setupIdentity:(NSDictionary *)identity){
@@ -38,71 +41,65 @@ RCT_EXPORT_METHOD(setupIdentity:(NSDictionary *)identity){
 
 RCT_EXPORT_METHOD(showHelpCenterWithOptions:(NSDictionary *)options) {
     dispatch_async(dispatch_get_main_queue(), ^{
-        UIWindow *window=[UIApplication sharedApplication].keyWindow;
-        UIViewController *vc = [window rootViewController];
-        
-        UIViewController *helpCenter = [ZDKHelpCenterUi buildHelpCenterOverviewUiWithConfigs:@[]];
-//        [vc.na pushViewController:helpCenter animated:YES];
-        
-        UIViewController *topViewController = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
-        while (topViewController.presentedViewController) topViewController = topViewController.presentedViewController;
-        
-        [topViewController presentViewController:helpCenter animated:YES completion:nil];
-    
+
+        ZDKHelpCenterUiConfiguration * requestConfig = [ZDKHelpCenterUiConfiguration new];
+        requestConfig.showContactOptions = YES;
+        UIViewController *helpCenter = [ZDKHelpCenterUi buildHelpCenterOverviewUiWithConfigs:@[requestConfig]];
+
+        UIWindow *window = [[UIApplication sharedApplication] keyWindow];
+        UIViewController *rootViewController = (UIViewController *)window.rootViewController;
+
+        UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController: helpCenter];
+        [navController.navigationBar setBarTintColor:UIColor.whiteColor];
+        [navController.navigationBar setValue:@(YES) forKeyPath:@"hidesShadow"];
+        [rootViewController presentViewController:navController animated:true completion:nil];
     });
-}
-
-- (UIViewController *)getTopViewController {
-    UIViewController *topViewController = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
-    while (topViewController.presentedViewController) topViewController = topViewController.presentedViewController;
-
-    return topViewController;
 }
 
 RCT_EXPORT_METHOD(showCategoriesWithOptions:(NSArray *)categories options:(NSDictionary *)options) {
     dispatch_async(dispatch_get_main_queue(), ^{
-//        UIWindow *window=[UIApplication sharedApplication].keyWindow;
-//        UIViewController *vc = [window rootViewController];
-//        ZDKHelpCenterOverviewContentModel *helpCenterContentModel = [ZDKHelpCenterOverviewContentModel defaultContent];
-//        helpCenterContentModel.groupType = ZDKHelpCenterOverviewGroupTypeCategory;
-//        helpCenterContentModel.groupIds = categories;
-//        helpCenterContentModel.hideContactSupport = [RCTConvert BOOL:options[@"hideContactSupport"]];
-//        if (helpCenterContentModel.hideContactSupport) {
-//            [ZDKHelpCenter setNavBarConversationsUIType:ZDKNavBarConversationsUITypeNone];
-//        }
-//        vc.modalPresentationStyle = UIModalPresentationFormSheet;
-//        [ZDKHelpCenter presentHelpCenterOverview:vc withContentModel:helpCenterContentModel];
+        //        UIWindow *window=[UIApplication sharedApplication].keyWindow;
+        //        UIViewController *vc = [window rootViewController];
+        //        ZDKHelpCenterOverviewContentModel *helpCenterContentModel = [ZDKHelpCenterOverviewContentModel defaultContent];
+        //        helpCenterContentModel.groupType = ZDKHelpCenterOverviewGroupTypeCategory;
+        //        helpCenterContentModel.groupIds = categories;
+        //        helpCenterContentModel.hideContactSupport = [RCTConvert BOOL:options[@"hideContactSupport"]];
+        //        if (helpCenterContentModel.hideContactSupport) {
+        //            [ZDKHelpCenter setNavBarConversationsUIType:ZDKNavBarConversationsUITypeNone];
+        //        }
+        //        vc.modalPresentationStyle = UIModalPresentationFormSheet;
+        //        [ZDKHelpCenter presentHelpCenterOverview:vc withContentModel:helpCenterContentModel];
     });
 }
 
 RCT_EXPORT_METHOD(showSectionsWithOptions:(NSArray *)sections options:(NSDictionary *)options) {
     dispatch_async(dispatch_get_main_queue(), ^{
-//        UIWindow *window=[UIApplication sharedApplication].keyWindow;
-//        UIViewController *vc = [window rootViewController];
-//        ZDKHelpCenterOverviewContentModel *helpCenterContentModel = [ZDKHelpCenterOverviewContentModel defaultContent];
-//        helpCenterContentModel.groupType = ZDKHelpCenterOverviewGroupTypeSection;
-//        helpCenterContentModel.groupIds = sections;
-//        helpCenterContentModel.hideContactSupport = [RCTConvert BOOL:options[@"hideContactSupport"]];
-//        if (helpCenterContentModel.hideContactSupport) {
-//            [ZDKHelpCenter setNavBarConversationsUIType:ZDKNavBarConversationsUITypeNone];
-//        }
-//        vc.modalPresentationStyle = UIModalPresentationFormSheet;
-//        [ZDKHelpCenter presentHelpCenterOverview:vc withContentModel:helpCenterContentModel];
+        //        UIWindow *window=[UIApplication sharedApplication].keyWindow;
+        //        UIViewController *vc = [window rootViewController];
+        //        ZDKHelpCenterOverviewContentModel *helpCenterContentModel = [ZDKHelpCenterOverviewContentModel defaultContent];
+        //        helpCenterContentModel.groupType = ZDKHelpCenterOverviewGroupTypeSection;
+        //        helpCenterContentModel.groupIds = sections;
+        //        helpCenterContentModel.hideContactSupport = [RCTConvert BOOL:options[@"hideContactSupport"]];
+        //        if (helpCenterContentModel.hideContactSupport) {
+        //            [ZDKHelpCenter setNavBarConversationsUIType:ZDKNavBarConversationsUITypeNone];
+        //        }
+        //        vc.modalPresentationStyle = UIModalPresentationFormSheet;
+        //        [ZDKHelpCenter presentHelpCenterOverview:vc withContentModel:helpCenterContentModel];
     });
 }
 
 RCT_EXPORT_METHOD(showLabelsWithOptions:(NSArray *)labels options:(NSDictionary *)options) {
     dispatch_async(dispatch_get_main_queue(), ^{
-//        UIWindow *window=[UIApplication sharedApplication].keyWindow;
-//        UIViewController *vc = [window rootViewController];
-//        ZDKHelpCenterOverviewContentModel *helpCenterContentModel = [ZDKHelpCenterOverviewContentModel defaultContent];
-//        helpCenterContentModel.labels = labels;
-//        helpCenterContentModel.hideContactSupport = [RCTConvert BOOL:options[@"hideContactSupport"]];
-//        if (helpCenterContentModel.hideContactSupport) {
-//            [ZDKHelpCenter setNavBarConversationsUIType:ZDKNavBarConversationsUITypeNone];
-//        }
-//        vc.modalPresentationStyle = UIModalPresentationFormSheet;
-//        [ZDKHelpCenter presentHelpCenterOverview:vc withContentModel:helpCenterContentModel];
+        //        UIWindow *window=[UIApplication sharedApplication].keyWindow;
+        //        UIViewController *vc = [window rootViewController];
+        //        ZDKHelpCenterOverviewContentModel *helpCenterContentModel = [ZDKHelpCenterOverviewContentModel defaultContent];
+        //        helpCenterContentModel.labels = labels;
+        //        helpCenterContentModel.hideContactSupport = [RCTConvert BOOL:options[@"hideContactSupport"]];
+        //        if (helpCenterContentModel.hideContactSupport) {
+        //            [ZDKHelpCenter setNavBarConversationsUIType:ZDKNavBarConversationsUITypeNone];
+        //        }
+        //        vc.modalPresentationStyle = UIModalPresentationFormSheet;
+        //        [ZDKHelpCenter presentHelpCenterOverview:vc withContentModel:helpCenterContentModel];
     });
 }
 
@@ -124,23 +121,23 @@ RCT_EXPORT_METHOD(showLabels:(NSArray *)labels) {
 
 RCT_EXPORT_METHOD(callSupport:(NSDictionary *)customFields) {
     dispatch_async(dispatch_get_main_queue(), ^{
-//        UIWindow *window=[UIApplication sharedApplication].keyWindow;
-//        UIViewController *vc = [window rootViewController];
-//        NSMutableArray *fields = [[NSMutableArray alloc] init];
-//        for (NSString* key in customFields) {
-//            id value = [customFields objectForKey:key];
-//            [fields addObject: [[ZDKCustomField alloc] initWithFieldId:@(key.integerValue) andValue:value]];
-//        }
-//        [ZDKConfig instance].customTicketFields = fields;
-//        [ZDKRequests presentRequestCreationWithViewController:vc];
+        UIWindow *window=[UIApplication sharedApplication].keyWindow;
+        UIViewController *vc = [window rootViewController];
+        NSMutableArray *fields = [[NSMutableArray alloc] init];
+        for (NSString* key in customFields) {
+            id value = [customFields objectForKey:key];
+            //            [fields addObject: [[ZDKCustomField alloc] initWithFieldId:@(key.integerValue) andValue:value]];
+        }
+        //        [ZDKConfig instance].customTicketFields = fields;
+        //        [ZDKRequests presentRequestCreationWithViewController:vc];
     });
 }
 
 RCT_EXPORT_METHOD(supportHistory){
     dispatch_async(dispatch_get_main_queue(), ^{
-//        UIWindow *window=[UIApplication sharedApplication].keyWindow;
-//        UIViewController *vc = [window rootViewController];
-//        [ZDKRequests presentRequestListWithViewController:vc];
+        UIWindow *window=[UIApplication sharedApplication].keyWindow;
+        UIViewController *vc = [window rootViewController];
+        //        [ZDKRequests presentRequestListWithViewController:vc];
     });
 }
 @end

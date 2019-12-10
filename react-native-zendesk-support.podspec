@@ -15,7 +15,7 @@ Pod::Spec.new do |s|
 
   s.platform = :ios, "9.3"
 
-  s.dependency 'ZendeskSDK','~> 3.0.3'
+  s.dependency 'ZendeskSDK','~> 4.0.0'
   s.dependency 'React'
   s.ios.xcconfig = {
     'FRAMEWORK_SEARCH_PATHS' => '"${PODS_ROOT}/ZendeskSDK"',
